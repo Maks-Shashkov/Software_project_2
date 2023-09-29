@@ -170,18 +170,21 @@ function repeat() {
 $("#script__button-aside-toggle").click(function() { aside_toggle() });
 
 function aside_toggle() {
-	$('.global__aside').toggle(
-		function(){
-			$("div.slide_panel").animate( {left:'201px'}, 500);
-		}, 
-		function() {
-			$("div.slide_panel").animate( {left:0}, 500);
-		}
-	);
-
-	console.log('Toggle of aside');
-	console.log('');
+    $('.global__aside').toggle(
+        {
+            duration: 500, // Изменить продолжительность анимации на 500 миллисекунд (по умолчанию 400)
+            easing: 'easeOutExpo', // Изменить функцию анимации по вашему вкусу (пример: 'easeInOutQuad')
+            start: function() {
+                $("div.slide_panel").stop().css('left', 0); // Сбросить анимацию перед началом новой
+            },
+            complete: function() {
+                console.log('Toggle of aside'); // Изменить сообщение в консоли на свое
+                console.log('Action completed'); // Добавить новое сообщение в консоли
+            }
+        }
+    );
 }
+
 
 /* -------------------- clear -------------------- */
 
