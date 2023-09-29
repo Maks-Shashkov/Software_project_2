@@ -373,7 +373,7 @@
 .show>.btn-light-blue.dropdown-toggle {
 	background-color: #1c71ff !important;
 	-webkit-box-shadow: 0 5px 11px 0 rgba(0, 0, 0, 0.18), 0 4px 15px 0 rgba(0, 0, 0, 0.15);
-	box-shadow: 0 5px 11px 0 rgba(0, 0, 0, 0.18), 0 4px 15px 0 rgba(0, 0, 0, 0.15)
+	box-shadow: 0 5px 13px 0 rgba(0, 0, 0, 0.18), 0 4px 15px 0 rgba(0, 0, 0, 0.15)
 }
 .btn-light-blue:not([disabled]):not(.disabled):active:focus,
 .btn-light-blue:not([disabled]):not(.disabled).active:focus,
