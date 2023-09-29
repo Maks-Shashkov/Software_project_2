@@ -2,34 +2,42 @@
 
 /* -------------------- initialization data -------------------- */
 
-var data = {
-	log__weight: 10,
-	log__level: get_level(10),
-	layers: 5,
-	layer__id: 1,
-	canvas__id_pr: 'script__canvas-paint-',
-	canvas__id_bg: 'script__canvas-background',
-	color__bg: get_ls('colorBGLS'),
-	color__pr: get_ls('colorDRLS'),
-	const widthDRLSKey = 'widthDRLS';
-    data.width__pr = get_ls(widthDRLSKey);
-
+const LogLevel = {
+    Debug: 10,
+    Info: 11
 };
 
-console.log('  Start ' + data.log__level + ' log');
+const data = {
+    log__weight: LogLevel.Info,
+    layers: 5,
+    layer__id: 1,
+    canvas__id_pr: 'script__canvas-paint-',
+    canvas__id_bg: 'script__canvas-background',
+    color__bg: get_ls('colorBGLS'),
+    color__pr: get_ls('colorDRLS'),
+    width__pr: get_ls('widthDRLS')
+};
+
+console.log(`  Start ${get_level(data.log__weight)} log`);
 console.log('--------------------------------');
 console.log('');
 console.log('Initialization of data:');
-console.log('  | Level log: ' + data.log__level);
-console.log('  | Weight log: ' + data.log__weight)
-console.log('  | ID top canvas: ' + data.canvas__id_pr + data.layer__id);
-console.log('  | ID back canvas: ' + data.canvas__id_bg);
-console.log('  | Number layers: ' + data.layers);
+console.log(`  | Level log: ${get_level(data.log__weight)}`);
+console.log(`  | Weight log: ${data.log__weight}`);
+console.log(`  | ID top canvas: ${data.canvas__id_pr}${data.layer__id}`);
+console.log(`  | ID back canvas: ${data.canvas__id_bg}`);
+console.log(`  | Number layers: ${data.layers}`);
 console.log('');
 
 check_config();
 
 update_config('Initialization');
+
+
+log('This is a debug message', 'Debug');
+
+log('This is an info message', 'Info');
+
 
 /* -------------------- initialization background -------------------- */
 
@@ -350,7 +358,7 @@ function check_config() {
 
 const LogLevel = {
     Debug: 10,
-    Info: 11 
+    Info: 11
 };
 
 function get_level(level) {
