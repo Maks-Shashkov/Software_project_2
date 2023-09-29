@@ -11,7 +11,9 @@ var data = {
 	canvas__id_bg: 'script__canvas-background',
 	color__bg: get_ls('colorBGLS'),
 	color__pr: get_ls('colorDRLS'),
-	width__pr: get_ls('widthDRLS'),
+	const widthDRLSKey = 'widthDRLS';
+    data.width__pr = get_ls(widthDRLSKey);
+
 };
 
 console.log('  Start ' + data.log__level + ' log');
@@ -224,7 +226,9 @@ function save_config() {
 	}
 
 	if ((width_pr_check !== null) && (width_pr_check !== undefined) && (width_pr_check !== "")){
-		set_ls('widthDRLS', width_pr_check);
+		const widthDRLSKey = 'widthDRLS';
+        set_ls(widthDRLSKey, width_pr_check);
+
 		data.width__pr = width_pr_check;
 	}
 
@@ -241,13 +245,23 @@ function save_config() {
 /* -------------------- update config -------------------- */
 
 function update_config(status = 'Update') {
-	$('#f1_inp1').val( get_ls('colorDRLS') );
-	$('#f1_inp2').val( get_ls('widthDRLS') );
+	const colorDRLSKey = 'colorDRLS';
+    $('#f1_inp1').val(get_ls(colorDRLSKey));
+
+	const widthDRLSKey = 'widthDRLS';
+    const widthFromLocalStorage = get_ls(widthDRLSKey);
+    $('#f1_inp2').val(widthFromLocalStorage);
 	$('#f2_inp1').val( get_ls('colorBGLS') );
 
 	console.log(status + ' config:');
-	console.log('  | Color of line: ' + get_ls('colorDRLS'));
-	console.log('  | Width of line: ' + get_ls('widthDRLS') + 'px');
+	const colorDRLSKey = 'colorDRLS';
+    const colorOfLine = get_ls(colorDRLSKey);
+    console.log(` | Color of line: ${colorOfLine}`);
+
+	const widthDRLSKey = 'widthDRLS';
+    const widthFromLocalStorage = get_ls(widthDRLSKey);
+    console.log(` | Width of line: ${widthFromLocalStorage}px`);
+
 	console.log('  | Color of background: ' + get_ls('colorBGLS'));
 	console.log('');
 }
@@ -298,13 +312,22 @@ function check_config() {
 	console.log('Check config...');
 
 	if (data.color__bg == null){
-		set_ls('colorBGLS', '#ffffff');
-		data.color__bg = get_ls('colorBGLS');
+		const widthDRLSKey = 'widthDRLS';
+        const widthToSet = '20';
+        set_ls(widthDRLSKey, widthToSet);
+        data.color__pr = get_ls(widthDRLSKey); 
+
+
 		check++;
 	}
 	if (data.color__pr == null){
-		set_ls('colorDRLS', '#000000');
-		data.color__pr = get_ls('colorDRLS');
+		const colorDRLSKey = 'colorDRLS'; // Создать константу для ключа
+        const defaultColor = '#000000'; // Создать константу для значения по умолчанию
+        set_ls(colorDRLSKey, defaultColor);
+
+		const colorDRLSKey = 'colorDRLS';
+        data.color__pr = get_ls(colorDRLSKey);
+
 		check++;
 	}
 	if (data.width__pr == null){
