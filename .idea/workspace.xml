@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="e3a05f21-4049-4e6b-bf37-388658276c5e" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/js/paint.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/paint.js" afterDir="false" />
-    </list>
+    <list default="true" id="e3a05f21-4049-4e6b-bf37-388658276c5e" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />

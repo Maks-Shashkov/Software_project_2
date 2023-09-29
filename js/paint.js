@@ -315,7 +315,7 @@ function check_config() {
 		const widthDRLSKey = 'widthDRLS';
         const widthToSet = '20';
         set_ls(widthDRLSKey, widthToSet);
-        data.color__pr = get_ls(widthDRLSKey); 
+        data.color__pr = get_ls(widthDRLSKey);
 
 
 		check++;
@@ -348,26 +348,35 @@ function check_config() {
 
 /* -------------------- level of logs -------------------- */
 
+const LogLevel = {
+    Debug: 10,
+    Info: 11 
+};
+
 function get_level(level) {
-	if (level <= 10) {
-		return 'Debug';
-	}
-	else if (level > 10) {
-		return 'Info'
-	}
+    if (level <= LogLevel.Debug) {
+        return 'Debug';
+    } else if (level <= LogLevel.Info) {
+        return 'Info';
+    } else {
+        return 'Unknown';
+    }
 }
 
-function log_debug(message) {
-	if (data.log__weight <= 10) {
-		console.log(message);
-	}
+function log(message, level) {
+    if (data.log__weight <= LogLevel[level]) {
+        console.log(message);
+    }
 }
 
-function log_info(message) {
-	if (data.log__weight > 10) {
-		console.log(message);
-	}
-}
+// Примеры использования:
+
+// Debug-сообщение
+log('This is a debug message', 'Debug');
+
+// Info-сообщение
+log('This is an info message', 'Info');
+
 
 /* -------------------- local storage -------------------- */
 
