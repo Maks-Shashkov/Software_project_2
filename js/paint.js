@@ -2,32 +2,42 @@
 
 /* -------------------- initialization data -------------------- */
 
-var data = {
-	log__weight: 10,
-	log__level: get_level(10),
-	layers: 5,
-	layer__id: 1,
-	canvas__id_pr: 'script__canvas-paint-',
-	canvas__id_bg: 'script__canvas-background',
-	color__bg: get_ls('colorBGLS'),
-	color__pr: get_ls('colorDRLS'),
-	width__pr: get_ls('widthDRLS'),
+const LogLevel = {
+    Debug: 10,
+    Info: 11
 };
 
-console.log('  Start ' + data.log__level + ' log');
+const data = {
+    log__weight: LogLevel.Info,
+    layers: 5,
+    layer__id: 1,
+    canvas__id_pr: 'script__canvas-paint-',
+    canvas__id_bg: 'script__canvas-background',
+    color__bg: get_ls('colorBGLS'),
+    color__pr: get_ls('colorDRLS'),
+    width__pr: get_ls('widthDRLS')
+};
+
+console.log(`  Start ${get_level(data.log__weight)} log`);
 console.log('--------------------------------');
 console.log('');
 console.log('Initialization of data:');
-console.log('  | Level log: ' + data.log__level);
-console.log('  | Weight log: ' + data.log__weight)
-console.log('  | ID top canvas: ' + data.canvas__id_pr + data.layer__id);
-console.log('  | ID back canvas: ' + data.canvas__id_bg);
-console.log('  | Number layers: ' + data.layers);
+console.log(`  | Level log: ${get_level(data.log__weight)}`);
+console.log(`  | Weight log: ${data.log__weight}`);
+console.log(`  | ID top canvas: ${data.canvas__id_pr}${data.layer__id}`);
+console.log(`  | ID back canvas: ${data.canvas__id_bg}`);
+console.log(`  | Number layers: ${data.layers}`);
 console.log('');
 
 check_config();
 
 update_config('Initialization');
+
+
+log('This is a debug message', 'Debug');
+
+log('This is an info message', 'Info');
+
 
 /* -------------------- initialization background -------------------- */
 
@@ -170,18 +180,21 @@ function repeat() {
 $("#script__button-aside-toggle").click(function() { aside_toggle() });
 
 function aside_toggle() {
-	$('.global__aside').toggle(
-		function(){
-			$("div.slide_panel").animate( {left:'201px'}, 500);
-		}, 
-		function() {
-			$("div.slide_panel").animate( {left:0}, 500);
-		}
-	);
-
-	console.log('Toggle of aside');
-	console.log('');
+    $('.global__aside').toggle(
+        {
+            duration: 500, // Изменить продолжительность анимации на 500 миллисекунд (по умолчанию 400)
+            easing: 'easeOutExpo', // Изменить функцию анимации по вашему вкусу (пример: 'easeInOutQuad')
+            start: function() {
+                $("div.slide_panel").stop().css('left', 0); // Сбросить анимацию перед началом новой
+            },
+            complete: function() {
+                console.log('Toggle of aside'); // Изменить сообщение в консоли на свое
+                console.log('Action completed'); // Добавить новое сообщение в консоли
+            }
+        }
+    );
 }
+
 
 /* -------------------- clear -------------------- */
 
@@ -221,7 +234,9 @@ function save_config() {
 	}
 
 	if ((width_pr_check !== null) && (width_pr_check !== undefined) && (width_pr_check !== "")){
-		set_ls('widthDRLS', width_pr_check);
+		const widthDRLSKey = 'widthDRLS';
+        set_ls(widthDRLSKey, width_pr_check);
+
 		data.width__pr = width_pr_check;
 	}
 
@@ -238,13 +253,23 @@ function save_config() {
 /* -------------------- update config -------------------- */
 
 function update_config(status = 'Update') {
-	$('#f1_inp1').val( get_ls('colorDRLS') );
-	$('#f1_inp2').val( get_ls('widthDRLS') );
+	const colorDRLSKey = 'colorDRLS';
+    $('#f1_inp1').val(get_ls(colorDRLSKey));
+
+	const widthDRLSKey = 'widthDRLS';
+    const widthFromLocalStorage = get_ls(widthDRLSKey);
+    $('#f1_inp2').val(widthFromLocalStorage);
 	$('#f2_inp1').val( get_ls('colorBGLS') );
 
 	console.log(status + ' config:');
-	console.log('  | Color of line: ' + get_ls('colorDRLS'));
-	console.log('  | Width of line: ' + get_ls('widthDRLS') + 'px');
+	const colorDRLSKey = 'colorDRLS';
+    const colorOfLine = get_ls(colorDRLSKey);
+    console.log(` | Color of line: ${colorOfLine}`);
+
+	const widthDRLSKey = 'widthDRLS';
+    const widthFromLocalStorage = get_ls(widthDRLSKey);
+    console.log(` | Width of line: ${widthFromLocalStorage}px`);
+
 	console.log('  | Color of background: ' + get_ls('colorBGLS'));
 	console.log('');
 }
@@ -295,13 +320,22 @@ function check_config() {
 	console.log('Check config...');
 
 	if (data.color__bg == null){
-		set_ls('colorBGLS', '#ffffff');
-		data.color__bg = get_ls('colorBGLS');
+		const widthDRLSKey = 'widthDRLS';
+        const widthToSet = '20';
+        set_ls(widthDRLSKey, widthToSet);
+        data.color__pr = get_ls(widthDRLSKey);
+
+
 		check++;
 	}
 	if (data.color__pr == null){
-		set_ls('colorDRLS', '#000000');
-		data.color__pr = get_ls('colorDRLS');
+		const colorDRLSKey = 'colorDRLS'; // Создать константу для ключа
+        const defaultColor = '#000000'; // Создать константу для значения по умолчанию
+        set_ls(colorDRLSKey, defaultColor);
+
+		const colorDRLSKey = 'colorDRLS';
+        data.color__pr = get_ls(colorDRLSKey);
+
 		check++;
 	}
 	if (data.width__pr == null){
@@ -322,26 +356,35 @@ function check_config() {
 
 /* -------------------- level of logs -------------------- */
 
+const LogLevel = {
+    Debug: 10,
+    Info: 11
+};
+
 function get_level(level) {
-	if (level <= 10) {
-		return 'Debug';
-	}
-	else if (level > 10) {
-		return 'Info'
-	}
+    if (level <= LogLevel.Debug) {
+        return 'Debug';
+    } else if (level <= LogLevel.Info) {
+        return 'Info';
+    } else {
+        return 'Unknown';
+    }
 }
 
-function log_debug(message) {
-	if (data.log__weight <= 10) {
-		console.log(message);
-	}
+function log(message, level) {
+    if (data.log__weight <= LogLevel[level]) {
+        console.log(message);
+    }
 }
 
-function log_info(message) {
-	if (data.log__weight > 10) {
-		console.log(message);
-	}
-}
+// Примеры использования:
+
+// Debug-сообщение
+log('This is a debug message', 'Debug');
+
+// Info-сообщение
+log('This is an info message', 'Info');
+
 
 /* -------------------- local storage -------------------- */
 
